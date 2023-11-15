@@ -8,6 +8,7 @@ type Product = {
   id: number;
   name: string;
   price: number;
+ 
 };
 const App = () => {
   const [products, setProducts] = useState<Product[]>([]);
@@ -16,7 +17,7 @@ const App = () => {
     price: 0,
   });
 
-const[isEdit,setIsEdit]=useState(false);
+const[isEdit,setIsEdit]=useState<boolean>(false);
 const[selectedProductId,setSelectedProductId]=useState<number | null>(null);
   //HOW CAN I FETCH DATA FROM BACKEND
   const fetchAllProduct = async () => {
@@ -43,7 +44,7 @@ const[selectedProductId,setSelectedProductId]=useState<number | null>(null);
       );
       toast.success(response.data.message);
       fetchAllProduct();
-    } catch (error) {
+    } catch (error: any) {
       toast.error(error.response.data.message);
     }
   };
@@ -56,17 +57,19 @@ try {
     toast.error('Please select a product to update')
     return
   }
-  const updateProductData={
+ 
+ const updateProductData={
     name:product.name,
-    price:product.price
+    price:product.price,
   }
   await axios.put(`http://127.0.0.1:3002/products/${selectedProductId}`,updateProductData);
+  
   toast.success("Product updated successfully");
   fetchAllProduct()
   setIsEdit(false);
   setSelectedProductId(null);
   setProduct({
-    name:'',
+    name:"",
     price:0
   })
 } catch (error) {
@@ -76,9 +79,11 @@ try {
 
   const updateOrCreateNewProduct=async()=>{
 if(isEdit){
-  handleUpdateProduct()
+  await handleUpdateProduct()
+  
 }else{
-  createNewProduct(product)
+   await createNewProduct(product)
+   
 }
   }
 

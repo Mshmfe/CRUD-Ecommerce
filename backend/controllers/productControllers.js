@@ -1,4 +1,3 @@
-import { v4 as uuidv4 } from "uuid";
 
 let products = [
   {
@@ -88,7 +87,7 @@ export const createProducts = (req, res) => {
     const data = req.body;
     console.log("Received data:", data);
     const newProduct = {
-      id: uuidv4(),
+      id: new Date().getTime(),
       name: data.name,
       price: data.price,
     };
@@ -110,7 +109,7 @@ export const createProducts = (req, res) => {
 export const updateSingleProduct = (req, res, next) => {
   try {
     const { id } = req.params;
-    const { name, price } = req.params;
+   
     const findIndexproduct = products.findIndex(
       (product) => product.id === Number(id)
     );
